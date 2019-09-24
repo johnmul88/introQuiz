@@ -1,0 +1,70 @@
+.main {
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+}
+
+.main .main-area {
+  border-radius: 5px;
+  float: left;
+  width: 350px;
+  padding: 5px;
+}
+
+.main .sub-area {
+  position: relative;
+  width: 165px;
+  height: 480px;
+  float: right;
+  overflow: scroll;
+  background-color: #ffee00;
+}
+
+.main .decide-area {
+  position: relative;
+  float: right;
+  margin-top:20px;
+}
+
+.attack:hover{
+  cursor: move;
+  opacity: 0.25;
+  -webkit-transform: scale(1.1);
+}
+.redo:hover{
+  cursor: move;
+  opacity: 0.25;
+  -webkit-transform: scale(1.1);
+}
+.complete:hover{
+  cursor: move;
+  opacity: 0.25;
+  -webkit-transform: scale(1.1);
+}
+
+
+.unit {
+  margin: 20px 2px 0px 2px;
+}
+
+.select-content {
+  position: absolute;
+  margin-top: 200px;
+  bottom: 0px;
+}
+
+.set1 {
+  background-color: #f9ff00;
+}
+.set2 {
+  background-color: #00c4ff52;
+  transform: scale(-1, 1);
+}
+.move-position{
+  background-color: #48ff00a8;
+  opacity: 0.95;
+}
+.now-select-unit {
+  background-color: #ff0000ba;
+}

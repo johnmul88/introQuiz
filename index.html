@@ -1,0 +1,164 @@
+<html lang='ja'>
+<head>
+  <meta charset="utf-8"/>
+  <title>イントロどん！</title>
+  <link rel="icon" href="./images/favicon.ico">
+  <link rel='stylesheet' type='text/css' href='./css/main.css?t=5'>
+  <link rel='stylesheet' type='text/css' href='./css/draggable.css?t=5'>
+  <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+
+  <style>
+button.plus:before {
+  content:"+";
+}
+.flexiblebox {
+ display: -webkit-flex;
+ display: flex;
+ -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
+ align-items: center; /* 縦方向中央揃え */
+ -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
+ justify-content: center; /* 横方向中央揃え */
+ margin: 1.0rem;
+}
+#user {
+  margin: 1.0rem;
+}
+.footer {
+  margin-top: 1.0rem;
+}
+.width64 {
+  width: 64px;
+}
+.height64 {
+  height: 64px;
+}
+
+/* Larger than mobile screen */
+@media (min-width: 40.0rem) { ... }
+
+/* Larger than tablet screen */
+@media (min-width: 80.0rem) { ... }
+
+/* Larger than desktop screen */
+@media (min-width: 120.0rem) { ... }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>イントロどん！</h2>
+  <h4>遊び方</h4>
+  <ol style="border: medium solid #666666;">
+    <li>参加者を追加</li>
+    <li>イントロクイズを出す</li>
+    <li>正解した参加者をクリック</li>
+    <li>※点数を減らす場合は参加者の点数をクリック</li>
+  </ol>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="column">
+      <b>参加者</b>
+        <div id="users" class="row">
+          <div id="users-table" class="column">
+            <div id="user-add">
+              <input type="text" placeholder="みトみト" id="userName"><button class="button button-outline plus" onclick='addUser(this)'></button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="column">
+      <b>点数</b>
+      <div id="main"class="row">
+        <div id="main-table" class="column"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var userCount = 0
+var selectColor = getCol(userCount)
+var mapId = 0
+var usersPoint = []
+
+function addUser(e) {
+// ユーザポイント
+  usersPoint[userCount] = 0
+
+// ユーザ数
+  userCount++
+
+  let userName = document.getElementById('userName').value ? document.getElementById('userName').value : "家来"
+  let usersTable = document.getElementById("users-table")
+  let backGroundCol = getCol(userCount)
+  let content = `<div id="user${userCount}" class="flexiblebox" style="background-color: ${backGroundCol};" onclick='selectUser(this)'>
+  <img src="./images/${userCount}.png" width="64" height="64">${userName}
+</div>`
+  usersTable.insertAdjacentHTML("afterbegin", content)
+
+// 点数
+  let mainTable = document.getElementById("main-table")
+  let pointContent = `<div class="flexiblebox"><img id="userPoint${userCount}" style="background-color: ${backGroundCol};" src="./images/point/0.png" width="64" height="64" onclick='decCount(this)'></div>`
+  mainTable.insertAdjacentHTML("afterbegin", pointContent)
+
+  document.getElementById('userName').value = ''
+
+  if (5 <= userCount) document.getElementById('user-add').remove()
+}
+
+function clearSelectColor() {
+  selectColor = "#ffffff"
+}
+
+function getCol(num) {
+  if (num == 1) {
+    return "#ff7f50"
+  } else if (num == 2) {
+    return "#508cff"
+  } else if (num == 3) {
+    return "#cccccc"
+  } else if (num == 4) {
+    return "#50ff98"
+  } else if (num == 5) {
+    return "#ff0909"
+  } else {
+    return "#ffffff"
+  }
+}
+
+// ポイント加算
+function selectUser(e) {
+  let uid = e.id.slice(-1)
+  if ( 7 <= usersPoint[uid -1]) {
+    return
+  }
+
+  usersPoint[uid - 1] += 1
+
+  // 点数
+  let userPointImg = document.getElementById(`userPoint${uid}`)
+  document.getElementById(`userPoint${uid}`).src = `./images/point/${usersPoint[uid - 1]}.png`
+}
+
+// point減算
+function decCount(e) {
+  let uid = e.id.slice(-1)
+  if (usersPoint[uid -1] <= 0) {
+    return
+  }
+
+  usersPoint[uid - 1] -= 1
+
+  // 点数
+  let userPointImg = document.getElementById(`userPoint${uid}`)
+  document.getElementById(`userPoint${uid}`).src = `./images/point/${usersPoint[uid - 1]}.png`
+}
+
+</script>
+
+<footer class="footer">
+  <section class="container">
+    <p>presented by:<a href="https://egaogaming.wixsite.com/smile" target="_blank">笑顔窓</a></p>
+  </section>
+</footer>
+</body>
+</html>
